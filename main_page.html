@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>What's up, weather?</title>
+		 <link rel="stylesheet" href="style_main_page.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+	</head>
+	<body>
+	<!-- header -->
+		<header>
+			<!-- Main page -->
+			<nav>
+			<div class="navbar">
+				<div class="menu">
+						<img id="home" src="img_trans.gif" width="1" height="1">
+						<div><a href="signup.html">SIGN UP</a></div>
+						<div><a href="login.html">LOGIN</a></div>
+				</div>
+			</div>
+			</nav>
+		</header>
+			<!-- logo -->
+			<figure>
+			<div class="image">
+  					<img src="weather.jpg" alt="Weather" style="width:50%;">
+  					<div class="centered"><big><strong>What's up, weather?</strong></big></div>
+
+				</div>
+			</figure>
+	<!-- continut principal -->
+		<main>
+			<section>
+			<h2> Weather in Cluj-Napoca </h2>
+
+			<script>
+				function requestXMLHttpRequest() {
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = "JSON"; //1
+        xhr.open('GET', "https://api.open-meteo.com/v1/ecmwf?latitude=46.79&longitude=23.69&hourly=temperature_2m");        
+        xhr.send();
+        xhr.onload = function() {
+            if (xhr.status != 200) { //2
+                console.log("XMLHttpRequest error: "+xhr.status);
+                return;
+            }
+	    
+            processWeatherData(xhr.response); //3
+        };
+        xhr.onerror = function() { //4
+            console.log("XMLHttpRequest Request failed");
+        };
+		
+    } 
+			function processWeatherData(response) {
+  			var result = JSON.parse(response);
+			document.getElementById("latitude").innerHTML = result.latitude;
+			document.getElementById("longitude").innerHTML = result.longitude;
+
+			}
+			</script>
+			<input type = "button" onclick = "requestXMLHttpRequest()" value = "Display data">  <br><br>
+				<label for="latitude" >Latitude:</label><br>
+				<p id="latitude"></p> <br>
+				<label for="longitude" >Longitude:</label><br>
+				<p id="longitude"></p>
+			</section>
+			
+		</main> 
+	
+	<!-- footer -->
+		<footer>
+		<div class="footer">
+			<div>
+			<hr>
+			&copy; Ilinca Popovici- 12.04.2023
+			</div> 
+		</div>
+		</footer>
+	</body>
+
+</html>
